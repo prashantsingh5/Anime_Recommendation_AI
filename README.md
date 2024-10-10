@@ -20,4 +20,9 @@ To set up the project locally, follow these steps:
    ```bash
    git clone https://github.com/prashantsingh5/Anime_Recommendation_AI.git
    cd anime_recommendation_ai
-   cd src```
+   
+2. Install the required Python packages:
+   ```bash
+   pip install -r requirements.txt
+   
+3. Update the dataset path in user_interface.py to point to your local dataset file.
