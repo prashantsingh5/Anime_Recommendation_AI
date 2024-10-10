@@ -26,3 +26,13 @@ To set up the project locally, follow these steps:
    pip install -r requirements.txt
    
 3. Update the dataset path in user_interface.py to point to your local dataset file.
+
+## Usage
+
+Interact with the chatbot through the terminal. You can ask for anime recommendations, details about specific titles, or specify genres you like.
+
+   ```bash
+   cd src
+
+   ```bash
+   python main.py
