@@ -1,0 +1,7 @@
+Flask==2.3.3
+Flask-Cors==3.0.10
+pandas==1.5.3
+scikit-learn==1.2.2
+fuzzywuzzy==0.18.0
+python-Levenshtein==0.20.9  # Optional but improves fuzzywuzzy performance
+numpy==1.24.3
