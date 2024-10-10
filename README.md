@@ -30,9 +30,23 @@ To set up the project locally, follow these steps:
 ## Usage
 
 Interact with the chatbot through the terminal. You can ask for anime recommendations, details about specific titles, or specify genres you like.
-1. Reach the directory
+1. Reach the directory:
    ```bash
    cd src
-2. Run the main script
+2. Run the main script:
    ```bash
    python main.py
+
+## Example Interaction
+
+Agent: Hi! Do you want some anime recommendations or details about a specific show?
+User: I want some anime recommendations.
+Agent: Would you like recommendations by genre or based on a specific anime title?
+User: I'd like recommendations by genre.
+Agent: Great! What genres do you like? (e.g., action, fantasy, romance)
+User: I love action and adventure anime.
+Agent: Here are some anime you might like:
+
+## Example Image
+
+![Screenshot 2024-10-10 170434](https://github.com/user-attachments/assets/4f4f3e59-705f-43b1-a77b-320cea4798d2)
