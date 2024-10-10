@@ -18,5 +18,6 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/anime_recommendation_ai.git
+   git clone https://github.com/prashantsingh5/Anime_Recommendation_AI.git
    cd anime_recommendation_ai
+   cd src"""
