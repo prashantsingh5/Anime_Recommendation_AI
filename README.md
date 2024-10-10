@@ -20,4 +20,4 @@ To set up the project locally, follow these steps:
    ```bash
    git clone https://github.com/prashantsingh5/Anime_Recommendation_AI.git
    cd anime_recommendation_ai
-   cd src"""
+   cd src```
