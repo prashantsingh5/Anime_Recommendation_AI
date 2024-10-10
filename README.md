@@ -39,13 +39,13 @@ Interact with the chatbot through the terminal. You can ask for anime recommenda
 
 ## Example Interaction
 
-Agent: Hi! Do you want some anime recommendations or details about a specific show?
-User: I want some anime recommendations.
-Agent: Would you like recommendations by genre or based on a specific anime title?
-User: I'd like recommendations by genre.
-Agent: Great! What genres do you like? (e.g., action, fantasy, romance)
-User: I love action and adventure anime.
-Agent: Here are some anime you might like:
+**Agent**: Hi! Do you want some anime recommendations or details about a specific show?  
+**User**: I want some anime recommendations.  
+**Agent**: Would you like recommendations by genre or based on a specific anime title?  
+**User**: I'd like recommendations by genre.  
+**Agent**: Great! What genres do you like? (e.g., action, fantasy, romance)  
+**User**: I love action and adventure anime.  
+**Agent**: Here are some anime you might like:
 
 ## Example Image
 
