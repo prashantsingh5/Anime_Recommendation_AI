@@ -30,9 +30,9 @@ To set up the project locally, follow these steps:
 ## Usage
 
 Interact with the chatbot through the terminal. You can ask for anime recommendations, details about specific titles, or specify genres you like.
-
+1. Reach the directory
    ```bash
    cd src
-
+2. Run the main script
    ```bash
    python main.py
