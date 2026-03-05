@@ -12,9 +12,9 @@ flowchart TD
   ENG --> UI2[CLI Interface]
   ENG --> API[Flask API]
 
-  API --> R1[POST /recommend/title]
-  API --> R2[POST /recommend/genre]
-  API --> R3[GET /details]
+  API --> R1["POST /recommend/title"]
+  API --> R2["POST /recommend/genre"]
+  API --> R3["GET /details"]
 ```
 
 ## Overview

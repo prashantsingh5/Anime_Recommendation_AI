@@ -1,6 +1,6 @@
 # AniScope AI
 
-[![CI](https://github.com/<your-username>/aniscope-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/aniscope-ai/actions/workflows/ci.yml)
+[![CI](https://github.com/prashantsingh5/Anime_Recommendation_AI/actions/workflows/ci.yml/badge.svg)](https://github.com/prashantsingh5/Anime_Recommendation_AI/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -49,9 +49,9 @@ flowchart LR
   D --> E2[CLI Chat Interface]
   D --> E3[Flask API]
 
-  E3 --> F1[/recommend/title]
-  E3 --> F2[/recommend/genre]
-  E3 --> F3[/details]
+  E3 --> F1["/recommend/title"]
+  E3 --> F2["/recommend/genre"]
+  E3 --> F3["/details"]
 ```
 
 ## Repository Structure
