@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aniscope-ai"
+version = "1.0.0"
+description = "Production-style anime recommender with flagship Gradio chat, CLI, and API interfaces"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Prashant Singh" }]
+license = { text = "MIT" }
+keywords = ["recommendation-system", "nlp", "anime", "machine-learning", "flask"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "Flask>=3.0.0",
+  "Flask-Cors>=4.0.0",
+  "pandas>=2.2.0",
+  "scikit-learn>=1.5.0",
+  "fuzzywuzzy==0.18.0",
+  "python-Levenshtein>=0.25.0",
+  "numpy>=2.1.0",
+  "beautifulsoup4>=4.12.3",
+  "gradio>=5.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+  "ruff>=0.9.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

@@ -1,52 +1,175 @@
-# Anime Recommendation AI
+# AniScope AI
 
-## Project Description
+[![CI](https://github.com/<your-username>/aniscope-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/aniscope-ai/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Anime Recommendation AI is an interactive chatbot application designed to provide personalized anime recommendations and details based on user input. Using a dataset of anime titles, genres, and descriptions, this application employs content-based filtering techniques to suggest anime tailored to user preferences.
+A production-style recommendation system that turns anime metadata into high-quality personalized suggestions through a modular ML pipeline. The project ships with multiple interfaces (Gradio flagship chat UI, CLI, and REST API), automated tests, and CI checks to reflect real software engineering standards.
 
-## Features
+## Flagship Highlights
 
-- **Personalized Recommendations**: Users can receive anime suggestions based on their favorite genres or specific titles.
-- **Detailed Information**: Users can inquire about specific anime titles and receive information such as descriptions and genres.
-- **User-Friendly Interface**: A simple conversational interface allows users to easily interact with the bot.
-- **Fuzzy Matching**: The application employs fuzzy matching to identify user-input titles, ensuring accurate recommendations even with minor typos.
-- **Data Preprocessing**: Includes data cleaning and preprocessing steps to handle missing values and ensure high-quality input data.
+- Modular recommendation architecture with reusable core engine
+- Multi-signal ranking with configurable feature weights
+- Typo-tolerant fuzzy matching for better UX
+- Robust preprocessing pipeline with schema validation and HTML cleaning
+- Professional project setup: tests, linting, CI workflow, docs, contribution guide, MIT license
+- Resume-ready engineering artifacts in `docs/RESUME_BULLETS.md`
 
-## Installation
+## System Design
 
-To set up the project locally, follow these steps:
+Pipeline in one line:
+`Raw CSV -> preprocessing -> feature extraction -> weighted similarity -> top-N ranking -> CLI/API response`
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/prashantsingh5/Anime_Recommendation_AI.git
-   cd anime_recommendation_ai
-   
-2. Install the required Python packages:
-   ```bash
-   pip install -r requirements.txt
-   
-3. Update the dataset path in user_interface.py to point to your local dataset file.
+Scoring uses four blended signals:
 
-## Usage
+- Genre overlap similarity
+- Description similarity using TF-IDF + cosine similarity
+- Seasonal similarity from one-hot encoded season features
+- Numeric profile similarity across year, score, popularity, episodes
 
-Interact with the chatbot through the terminal. You can ask for anime recommendations, details about specific titles, or specify genres you like.
-1. Reach the directory:
-   ```bash
-   cd src
-2. Run the main script:
-   ```bash
-   python main.py
+Weights are configurable in `src/config.py` using `SIMILARITY_WEIGHTS`.
 
-## Example Interaction
+## Architecture Diagram
 
-**Agent**: Hi! Do you want some anime recommendations or details about a specific show?  
-**User**: I want some anime recommendations.  
-**Agent**: Would you like recommendations by genre or based on a specific anime title?  
-**User**: I'd like recommendations by genre.  
-**Agent**: Great! What genres do you like? (e.g., action, fantasy, romance)  
-**User**: I love action and adventure anime.  
-**Agent**: Here are some anime you might like:
+```mermaid
+flowchart LR
+  A[Anime Dataset CSV] --> B[Data Preprocessing Layer]
+  B --> C[Feature Engineering]
+  C --> C1[TF-IDF Description Matrix]
+  C --> C2[Genre One-Hot Signals]
+  C --> C3[Season Encoding]
+  C --> C4[Numeric Normalization]
 
-## Example Image
+  C1 --> D[Recommendation Engine]
+  C2 --> D
+  C3 --> D
+  C4 --> D
 
-![Screenshot 2024-10-10 170434](https://github.com/user-attachments/assets/4f4f3e59-705f-43b1-a77b-320cea4798d2)
+  D --> E1[Gradio Chat UI]
+  D --> E2[CLI Chat Interface]
+  D --> E3[Flask API]
+
+  E3 --> F1[/recommend/title]
+  E3 --> F2[/recommend/genre]
+  E3 --> F3[/details]
+```
+
+## Repository Structure
+
+```text
+aniscope-ai/
+  .github/workflows/
+    ci.yml
+  data/
+    anime_dataset_new.csv
+  docs/
+    ARCHITECTURE.md
+    RESUME_BULLETS.md
+    SHOWCASE_CHECKLIST.md
+  src/
+    api.py
+    config.py
+    constants.py
+    data_preprocessing.py
+    recommendation_engine.py
+    user_interface.py
+    main.py
+  tests/
+    test_preprocessing.py
+    test_recommendation_engine.py
+  CONTRIBUTING.md
+  LICENSE
+  pyproject.toml
+  requirements.txt
+  run.py
+```
+
+## Quickstart (Windows, venv)
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+## Run
+
+CLI chatbot mode:
+
+```powershell
+python src/main.py --mode chat
+```
+
+API mode:
+
+```powershell
+python src/main.py --mode api --host 127.0.0.1 --port 5000
+```
+
+Alternative root entrypoint:
+
+```powershell
+python run.py --mode api
+```
+
+Gradio flagship chat UI:
+
+```powershell
+python gradio_app.py
+```
+
+## API Reference
+
+- `GET /health`
+- `POST /recommend/title`
+  - body: `{ "title": "cowboy bebop", "top_n": 10 }`
+- `POST /recommend/genre`
+  - body: `{ "query": "action sci-fi", "top_n": 10 }`
+- `GET /details?title=cowboy%20bebop`
+
+Example request:
+
+```bash
+curl -X POST http://127.0.0.1:5000/recommend/title \
+  -H "Content-Type: application/json" \
+  -d '{"title":"cowboy bebop","top_n":5}'
+```
+
+## Quality Gates
+
+```powershell
+ruff check .
+pytest
+```
+
+CI runs lint + tests on push and pull request via `.github/workflows/ci.yml`.
+
+## Resume/Portfolio Assets
+
+- Architecture explainer: `docs/ARCHITECTURE.md`
+- Resume bullets and ATS keywords: `docs/RESUME_BULLETS.md`
+- Publishing checklist: `docs/SHOWCASE_CHECKLIST.md`
+
+## Showcase UI
+
+Use the Gradio app for a professional conversational showcase with guided chat state.
+
+- Features included:
+  - guided recommendation conversation flow
+  - slash commands (`/title`, `/genre`, `/details`)
+  - quick action panels for fast demo prompts
+  - polished branded styling for portfolio demos
+- File: `gradio_app.py`
+
+## Next Up (for Top 1%)
+
+- Add offline evaluation metrics (`precision@k`, `recall@k`, `hit-rate@k`)
+- Add hybrid ranking with collaborative feedback signals
+- Add experiment tracking and model versioning
+- Add a public Gradio Spaces deployment + demo video in README
+- Add Docker image and one-click cloud deployment
+
+## License
+
+MIT
