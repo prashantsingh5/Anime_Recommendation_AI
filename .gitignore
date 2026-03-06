@@ -1,8 +1,28 @@
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.so
 .venv/
 venv/
 .env
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.hypothesis/
 .coverage
+coverage.xml
 htmlcov/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Logs and local files
+*.log
+.DS_Store
+
+# Editor settings (keep workspace local)
+.vscode/
+.idea/
