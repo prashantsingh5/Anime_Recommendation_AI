@@ -145,6 +145,27 @@ pytest
 
 CI runs lint + tests on push and pull request via `.github/workflows/ci.yml`.
 
+## Offline Evaluation Metrics
+
+Run offline evaluation to report ranking quality metrics:
+
+```powershell
+python evaluate_offline.py --k 10 --sample-size 100 --min-relevant 5
+```
+
+Latest run results:
+
+- `evaluated_queries`: `100`
+- `precision@10`: `0.9990`
+- `recall@10`: `0.0024`
+- `hit-rate@10`: `1.0000`
+
+Metrics included:
+
+- `precision@k`: fraction of top-k recommendations that are relevant
+- `recall@k`: fraction of relevant items recovered in top-k
+- `hit-rate@k`: percentage of queries with at least one relevant item in top-k
+
 ## Resume/Portfolio Assets
 
 - Architecture explainer: `docs/ARCHITECTURE.md`
@@ -164,7 +185,6 @@ Use the Gradio app for a professional conversational showcase with guided chat s
 
 ## Next Up (for Top 1%)
 
-- Add offline evaluation metrics (`precision@k`, `recall@k`, `hit-rate@k`)
 - Add hybrid ranking with collaborative feedback signals
 - Add experiment tracking and model versioning
 - Add a public Gradio Spaces deployment + demo video in README
