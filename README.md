@@ -183,13 +183,6 @@ Use the Gradio app for a professional conversational showcase with guided chat s
   - polished branded styling for portfolio demos
 - File: `gradio_app.py`
 
-## Next Up (for Top 1%)
-
-- Add hybrid ranking with collaborative feedback signals
-- Add experiment tracking and model versioning
-- Add a public Gradio Spaces deployment + demo video in README
-- Add Docker image and one-click cloud deployment
-
 ## License
 
 MIT
