@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import Any
 
 import gradio as gr
@@ -40,6 +41,30 @@ def _intent(text: str) -> str | None:
         return "recommend"
     if any(word in lowered for word in ["detail", "info", "information", "about"]):
         return "details"
+    return None
+
+
+def _extract_title_hint(text: str) -> str | None:
+    lowered = text.lower().strip()
+
+    quoted = re.search(r"[\"']([^\"']{2,80})[\"']", text)
+    if quoted:
+        return quoted.group(1).strip()
+
+    patterns = [
+        r"(?:like|similar to|based on|from)\s+(.+?)(?:\s+(?:with|that|which|and)\b|[?.!,]|$)",
+        r"(?:details|info|information)\s+(?:about|for|on)\s+(.+?)(?:[?.!,]|$)",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, lowered)
+        if match:
+            candidate = text[match.start(1) : match.end(1)].strip(" .,!?:;\"'")
+            if len(candidate) >= 2:
+                return candidate
+
+    if len(text.split()) <= 6:
+        return text.strip(" .,!?:;\"'")
+
     return None
 
 
@@ -115,11 +140,56 @@ def handle_chat(message: str, history: ChatHistory | None, state: dict[str, Any]
     if current["stage"] == "root":
         found = _intent(text)
         if found == "recommend":
+            # Prefer one-shot responses when users provide a natural-language request.
+            title_hint = _extract_title_hint(text)
+            if title_hint:
+                result = ENGINE.recommend_anime(title_hint, top_n=8)
+                if not (
+                    isinstance(result, str)
+                    and (
+                        result.startswith("Could not find")
+                        or result.startswith("No anime title matched")
+                    )
+                ):
+                    bot = result if isinstance(result, str) else _to_markdown_table(result)
+                    history = _append(history, text, bot)
+                    current = _reset_state()
+                    return history, current, ""
+
+            genre_result = ENGINE.recommend_anime_by_genre(text, top_n=8)
+            if not (
+                isinstance(genre_result, str)
+                and genre_result.startswith("I could not detect a genre clearly")
+            ):
+                bot = genre_result if isinstance(genre_result, str) else _to_markdown_table(genre_result)
+                history = _append(history, text, bot)
+                current = _reset_state()
+                return history, current, ""
+
             current["stage"] = "recommend_mode"
             bot = "Great. Do you want recommendations by **title** or **genre**?"
             history = _append(history, text, bot)
             return history, current, ""
         if found == "details":
+            title_hint = _extract_title_hint(text)
+            if title_hint:
+                result = ENGINE.get_anime_details(title_hint)
+                if isinstance(result, str):
+                    bot = result
+                else:
+                    bot = (
+                        f"**{result['title']}**\n\n"
+                        f"- Romaji: {result['title_romaji']}\n"
+                        f"- Native: {result['title_native']}\n"
+                        f"- Genres: {', '.join(result['genres'])}\n"
+                        f"- Year: {result['year']}\n"
+                        f"- Mean Score: {result['mean_score']:.2f}\n\n"
+                        f"{result['description'][:650]}"
+                    )
+                history = _append(history, text, bot)
+                current = _reset_state()
+                return history, current, ""
+
             current["stage"] = "details_query"
             bot = "Perfect. Tell me the anime title you want details for."
             history = _append(history, text, bot)
