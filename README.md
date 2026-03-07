@@ -15,6 +15,10 @@ A production-style recommendation system that turns anime metadata into high-qua
 - Professional project setup: tests, linting, CI workflow, docs, contribution guide, MIT license
 - Resume-ready engineering artifacts in `docs/RESUME_BULLETS.md`
 
+## Demo
+
+https://github.com/user-attachments/assets/06635b3a-6e55-43f5-bc9f-ced8abc42c43
+
 ## System Design
 
 Pipeline in one line:
